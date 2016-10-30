@@ -1,0 +1,165 @@
+#!/usr/bin/env bash
+
+set -e
+
+BATTERY=${BATTERY:-"BAT0"}
+CRITICAL_LEVEL=${CRITICAL_LEVEL:-20}
+BATTERY_COLORS=${BATTERY_COLORS:-true}
+
+battery_full=''
+battery_three_quarters=''
+battery_half=''
+battery_quarter=''
+charging=''
+
+dis_colors_0="#FF0027"
+dis_colors_1="#FF3B27"
+dis_colors_2="#FFB923"
+dis_colors_3="#FFD000"
+dis_colors_4="#E4FF00"
+dis_colors_5="#ADFF00"
+dis_colors_6="#6DFF00"
+dis_colors_7="#10BA00"
+color_full="#0EA700"
+
+usage() {
+cat <<EOF
+usage: $(basename $0) [-h] [--bat battery] [-c criticalLevel]
+  general:
+    -h, --help      print this message
+    -b, --bat       the battery to use. By default 'BAT0' is used
+    -l, --critical  if the battery goes below this level, the background
+                    of the bar will be red. By default the critical level is 20
+    -c, --colors    whether or not to use colors. By default colors are enabled
+EOF
+}
+
+color() {
+  if [[ $1 -le $critical_level ]]
+  then
+    echo "#FFFFFF"
+  else
+    if [[ $1 -lt 10 ]]
+    then
+      echo $dis_colors_0
+    elif [[ $1 -lt 20 ]]
+    then
+      echo $dis_colors_1
+    elif [[ $1 -lt 30 ]]
+    then
+      echo $dis_colors_2
+    elif [[ $1 -lt 40 ]]
+    then
+      echo $dis_colors_3
+    elif [[ $1 -lt 50 ]]
+    then
+      echo $dis_colors_4
+    elif [[ $1 -lt 60 ]]
+    then
+      echo $dis_colors_5
+    elif [[ $1 -lt 70 ]]
+    then
+      echo $dis_colors_6
+    elif [[ $1 -lt 80 ]]
+    then
+      echo $dis_colors_7
+    else
+      echo $color_full
+    fi
+  fi
+}
+
+battery() {
+  if [[ $1 -le 25 ]]
+  then
+    echo $battery_quarter
+  elif [[ $1 -le 50 ]]
+  then
+    echo $battery_half
+  elif [[ $1 -le 75 ]]
+  then
+    echo $battery_three_quarters
+  else
+    echo $battery_full
+  fi
+}
+
+print() {
+  capacity=$(cat /sys/class/power_supply/${BATTERY}/capacity)
+  status=$(cat /sys/class/power_supply/${BATTERY}/status)
+
+  battery_icon=$(battery $capacity)
+  fulltext="$battery_icon $capacity%"
+  if [ "$BATTERY_COLORS" = true ] && [ $capacity -gt $CRITICAL_LEVEL ]
+  then
+    fulltext="<span color=\"$(color $capacity)\">$battery_icon</span> $capacity%"
+  fi
+
+  case $status in
+    "Charging")
+      fulltext="$charging $fulltext"
+      ;;
+    "Full")
+      ;;
+    "AC")
+      ;;
+    "Discharging"|"Unknown")
+      ;;
+  esac
+
+  echo $fulltext
+
+  if [[ $capacity -le $critical_level ]]
+  then
+    exit 33
+  fi
+}
+
+main() {
+  until [[ -z $1 ]]
+  do
+    case $1 in
+      -h|--help )
+        usage
+        exit 0
+        ;;
+      -b|--bat )
+        shift
+        if ! [[ -d "/sys/class/power_supply/$1" ]]
+        then
+          echo "'$1' does not exist!"
+          exit 1
+        fi
+
+        BATTERY=$1
+        ;;
+      -l|--critical )
+        shift
+        re='^(100|[1-9]?[0-9])$'
+        if ! [[ $1 =~ $re ]]
+        then
+          echo "'$1' is an invalid percentage. (Must be between 0 and 100)."
+          exit 1
+        fi
+        CRITICAL_LEVEL=$1
+        ;;
+      -c|--colors )
+        if [ "$BATTERY_COLORS" = true ]
+        then
+          BATTERY_COLORS=false
+        else
+          BATTERY_COLORS=true
+        fi
+        ;;
+      * )
+        echo "Invalid option '$1'"
+        exit 1
+        ;;
+    esac
+    shift
+  done
+
+  print
+}
+
+main $@
