@@ -1,0 +1,112 @@
+! colors
+#define bg0_h       #1d2021
+#define bg0_s       #32302f
+
+#define bg0         #282828
+#define bg1         #3c3836
+#define bg2         #504945
+#define bg3         #665c54
+#define bg4         #928374
+
+#define fg0         #fbf1c7
+#define fg1         #ebdbb2
+#define fg2         #d5c4a1
+#define fg3         #bdae93
+#define fg4         #a89984
+
+#define orange      #fe8019
+#define dark_orange #d65d0e
+#define red         #fb4934
+#define dark_red    #cc241d
+#define green       #b8bb26
+#define dark_green  #98971a
+#define yellow      #fabd2f
+#define dark_yellow #d79921
+#define blue        #83a598
+#define dark_blue   #458588
+#define purple      #d3869b
+#define dark_purple #b16286
+#define aqua        #8ec07e
+#define dark_aqua   #689d6a
+#define gray        #928374
+#define dark_gray   #a89984
+
+! Cursor theme
+xcursor.theme:            Vanilla-DMZ
+
+!-- Xft settings -- !
+Xft.autohint:   0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting:    1
+Xft.antialias:  1
+Xft.rgba:       rgb
+
+! rofi
+rofi.modi: run
+rofi.font: Hack 15
+rofi.width: 100
+rofi.lines: 5
+rofi.columns: 1
+!                  bg     fg      altbg   hlbg    hlfg
+rofi.color-normal: bg0,   fg1,    bg0,    fg1,    bg0
+rofi.color-urgent: bg0,   fg1,    bg0,    fg1,    bg0
+rofi.color-active: bg0,   fg1,    bg0,    fg1,    bg0
+rofi.color-window: bg0,   bg0
+rofi.bw: 0
+rofi.location: 0
+rofi.padding: 100
+rofi.fuzzy: false
+
+! URxvt config
+URxvt*termName:           rxvt-16color
+URxvt*font:               xft:Hack:size=11:antialias=true:hinting=true,xft:FontAwesome:size:11:antialias=true:hinting=false
+URxvt.urgentOnBell:       True
+URxvt.cursorBlink:        True
+URxvt.cursorUnderline:    True
+URxvt.scrollBar:          False
+URxvt.internalBorder:     0
+URxvt*selectToClipboard:  True
+URxvt*saveLines:          10000
+
+URxvt.perl-ext-common:    default,matcher,tabbedex,searchable-scrollback
+URxvt.urlLauncher:        /usr/bin/firefox
+URxvt.matcher.button:     1
+URxvt.tabbed.tabbar-fg:   8
+URxvt.tabbed.tabbar-bg:   0
+URxvt.tabbed.tab-fg:      2
+URxvt.tabbed.tab-bg:      0
+URxvt.tabbed.new-button:  no
+URxvt.tabbed.title:       no
+
+*background: bg0_h
+*foreground: fg1
+
+! Black + DarkGrey
+*color0:  bg0
+*color8:  gray
+! DarkRed + Red
+*color1:  dark_red
+*color9:  red
+! DarkGreen + Green
+*color2:  dark_green
+*color10: green
+! DarkYellow + Yellow
+*color3:  dark_yellow
+*color11: yellow
+! DarkBlue + Blue
+*color4:  dark_blue
+*color12: blue
+! DarkPurple + Purple
+*color5:  dark_purple
+*color13: purple
+! DarkAqua + Aqua
+*color6:  dark_aqua
+*color14: aqua
+! LightGrey + White
+*color7:  fg4
+*color15: fg1
+
+! xscreensaver
+xscreensaver.fade:        false
+xscreensaver.unfade:      false

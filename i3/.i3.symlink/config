@@ -1,0 +1,227 @@
+#############################################
+#         General configuration             #
+#############################################
+
+font pango:Open Sans, FontAwesome Bold 11
+
+set $mod Mod4
+
+# use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+#############################################
+#                  Keymaps                  #
+#############################################
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+# bindsym $mod+d exec dmenu_run
+bindsym $mod+d exec --no-startup-id rofi -show run
+
+# change focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the next scratchpad window or hide the focused scratchpad window.
+# If there are multiple scratchpad windows, this command cycles through them.
+bindsym $mod+minus scratchpad show
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+#############################################
+#                 Workspace                #
+#############################################
+
+set $ws1  "1"
+set $ws2  "2"
+set $ws3  "3"
+set $ws4  "4"
+set $ws5  "5"
+set $ws6  "6"
+set $ws7  "7"
+set $ws8  "8"
+set $ws9  "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+ampersand workspace $ws1
+bindsym $mod+eacute workspace $ws2
+bindsym $mod+quotedbl workspace $ws3
+bindsym $mod+apostrophe workspace $ws4
+bindsym $mod+parenleft workspace $ws5
+bindsym $mod+section workspace $ws6
+bindsym $mod+egrave workspace $ws7
+bindsym $mod+exclam workspace $ws8
+bindsym $mod+ccedilla workspace $ws9
+bindsym $mod+agrave workspace $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+ampersand move container to workspace $ws1
+bindsym $mod+Shift+eacute move container to workspace $ws2
+bindsym $mod+Shift+quotedbl move container to workspace $ws3
+bindsym $mod+Shift+apostrophe move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+section move container to workspace $ws6
+bindsym $mod+Shift+egrave move container to workspace $ws7
+bindsym $mod+Shift+exclam move container to workspace $ws8
+bindsym $mod+Shift+ccedilla move container to workspace $ws9
+bindsym $mod+Shift+agrave move container to workspace $ws10
+
+force_display_urgency_hint 0 ms
+workspace_auto_back_and_forth yes
+focus_on_window_activation urgent
+
+#############################################
+#             Resize handling               #
+#############################################
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+        bindsym $left       resize shrink width 10 px or 10 ppt
+        bindsym $down       resize grow height 10 px or 10 ppt
+        bindsym $up         resize shrink height 10 px or 10 ppt
+        bindsym $right      resize grow width 10 px or 10 ppt
+
+        bindsym Left        resize shrink width 10 px or 10 ppt
+        bindsym Down        resize grow height 10 px or 10 ppt
+        bindsym Up          resize shrink height 10 px or 10 ppt
+        bindsym Right       resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+#############################################
+#                 Colors                    #
+#############################################
+
+set $hardbg0    #1d2021
+set $softbg0    #32302f
+
+set $bg0        #282828
+set $bg1        #3c3836
+set $bg2        #504945
+set $bg3        #665c54
+set $bg4        #928374
+
+set $fg0        #fbf1c7
+set $fg1        #ebdbb2
+set $fg2        #d5c4a1
+set $fg3        #bdae93
+set $fg4        #a89984
+
+set $orange     #fe8019
+set $darkorange #d65d0e
+set $red        #fb4934
+set $darkred    #cc241d
+set $green      #b8bb26
+set $darkgreen  #98971a
+set $yellow     #fabd2f
+set $darkyellow #d79921
+set $blue       #83a598
+set $darkblue   #458588
+set $purple     #d3869b
+set $darkpurple #b16286
+set $aqua       #8ec07e
+set $darkaqua   #689d6a
+set $gray       #928374
+set $darkgray   #a89984
+
+#                       border  background  text  indicator   child_border
+client.focused          $bg1    $bg1        $fg1  $hardbg0    $bg1
+client.unfocused        $bg0    $bg0        $fg4  $hardbg0    $bg0
+client.focused_inactive $bg0    $bg0        $fg4  $hardbg0    $bg0
+client.urgent           $red    $red        $fg1  $darkred    $red
+client.background       $bg0
+
+#############################################
+#                 i3-bar                    #
+#############################################
+
+bar {
+        position bottom
+        font pango:Open Sans, FontAwesome 11
+        status_command i3blocks
+        tray_padding 0
+
+        colors {
+          statusline  $fg1
+          background  $bg0
+          separator   $bg0
+
+          # name              border  bg    text
+          focused_workspace   $bg1    $bg1  $fg1
+          active_workspace    $bg0    $bg0  $fg4
+          inactive_workspace  $bg0    $bg0  $fg4
+          urgent_workspace    $red    $red  $fg1
+          binding_mode        $red    $red  $fg1
+        }
+}
+
+#############################################
+#        Windows & Startup programs         #
+#############################################
+
+#new_window 1pixel
+#for_window [class="^.*"] border pixel 5
+#new_window none
+#for_window [class=(?i)urxvt] floating enable

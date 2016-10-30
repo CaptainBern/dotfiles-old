@@ -1,0 +1,30 @@
+command=$HOME/scripts/$BLOCK_NAME
+separator_block_width=20
+markup=pango
+
+# [wifi]
+# interval=2
+# label=
+
+[volume]
+command=$HOME/scripts/volume
+interval=once
+signal=1
+
+[battery]
+command=$HOME/scripts/battery -c
+interval=persist
+
+[date]
+command=date "+%d-%m-%y"
+interval=10
+label=
+
+[time]
+command=date "+%H:%M"
+interval=30
+label=
+
+[shutdown_menu]
+full_text=
+command=$HOME/scripts/shutdown_menu && echo ""

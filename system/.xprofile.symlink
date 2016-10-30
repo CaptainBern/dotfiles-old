@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# load Xresources
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
