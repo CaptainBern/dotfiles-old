@@ -16,7 +16,7 @@ EOF
 }
 
 cleanup() {
-  rm -rf $IMAGE
+  rm $IMAGE
 }
 
 lock() {
