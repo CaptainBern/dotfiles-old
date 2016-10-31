@@ -60,7 +60,7 @@ rofi.fuzzy: false
 
 ! URxvt config
 URxvt*termName:           rxvt-16color
-URxvt*font:               xft:Hack:size=11:antialias=true:hinting=true,xft:FontAwesome:size:11:antialias=true:hinting=false
+URxvt*font:               xft:Hack:size=11:antialias=true:hinting=true,xft:FontAwesome:size=11:antialias=true:hinting=false
 URxvt.urgentOnBell:       True
 URxvt.cursorBlink:        True
 URxvt.cursorUnderline:    True
