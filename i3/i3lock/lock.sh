@@ -3,7 +3,7 @@
 set -e
 trap cleanup EXIT
 
-LOCK_ICON="${DOT_FILES}/i3/i3lock/lock.png"
+LOCK_ICON="${HOME}/.dotfiles/i3/i3lock/lock.png"
 IMAGE="$(mktemp XXXXXXXXXXXXXXXX.png)"
 
 usage() {
