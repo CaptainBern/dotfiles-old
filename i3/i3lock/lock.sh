@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
 set -e
+trap cleanup EXIT
 
-LOCK_ICON="$HOME/.dotfiles/i3/i3lock/lock.png"
-IMAGE="$(mktemp).png"
+LOCK_ICON="${DOT_FILES}/i3/i3lock/lock.png"
+IMAGE="$(mktemp XXXXXXXXXXXXXXXX.png)"
 
 usage() {
 cat <<EOF
@@ -12,6 +13,10 @@ usage: $(basename $0) [-h] [-i icon]
     -h, --help      print this message
     -i, --icon      set the icon
 EOF
+}
+
+cleanup() {
+  rm -rf $IMAGE
 }
 
 lock() {
@@ -39,7 +44,7 @@ lock() {
           PX=$(($SROX + $SRX/2 - $RX/2))
           PY=$(($SROY + $SRY/2 - $RY/2))
 
-          convert $IMAGE $LOCK_ICON -geometry +$PX+$PY -composite -matte  $IMAGE
+          convert $IMAGE $LOCK_ICON -geometry +$PX+$PY -composite -matte $IMAGE
       done
   fi
 
