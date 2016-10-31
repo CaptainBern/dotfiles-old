@@ -40,11 +40,29 @@ install_dotfiles() {
 	ok "Successfully installed dotfiles!"
 }
 
+
 main() {
 	cd "$(dirname "$0")/.."
-	DOTFILES_ROOT=$(pwd -P)
+	export DOTFILES_ROOT=$(pwd -P)
 
-	source ~/.dotfiles/bootstrap/utils.sh
+  if [[ "$DOTFILES_ROOT" != "$HOME/.dotfiles" ]]
+  then
+    echo "Invalid directory! Clone the dotfiles repo into ${HOME}/.dotfiles and run ${HOME}/.dotfiles/bootstrap/install.sh!"
+    exit 1
+  fi
+
+	source $DOTFILES_ROOT/bootstrap/utils.sh
+
+  local distro=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
+  if [[ -f "$DOTFILES_ROOT/bootstrap/install_deps_${distro}.sh" ]]
+  then
+    if ask "Do you wish to install the dependencies for your distro?" Y
+    then
+      ${DOTFILES_ROOT}/bootstrap/install_deps_${distro}.sh
+    fi
+  else
+    warn "Failed to find the dependency-installation script for your distro! ($distro)"
+  fi
 
 	install_zsh
 	install_dotfiles
