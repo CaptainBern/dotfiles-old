@@ -21,6 +21,7 @@ EOM
 configure_apt() {
   if [ ! -f "/etc/apt/sources.list.d/jessie_testing.list" ]
   then
+    dir=$(mktemp -d)
     echo "$TESTING" > /tmp/jessie_testing.list
     sudo mv /tmp/jessie_testing.list /etc/apt/sources.list.d/
   fi
@@ -48,20 +49,16 @@ install_fonts() {
       local url="https://github.com/google/fonts/archive/master.zip"
       local file="google-fonts.zip"
       local google_fonts="${HOME}/.fonts/google-fonts"
-
-      if [ ! -d /tmp/google-fonts ]
-      then
-        mkdir /tmp/google-fonts
-      fi
+      local dir=$(mktemp -d)
 
       info "Installing Google Fonts..."
 
-      wget -q -O /tmp/google-fonts/${file} ${url}
-      unzip -qq /tmp/google-fonts/${file} -d /tmp/google-fonts
-      sudo mkdir -p $google_fonts
-      sudo mv /tmp/google-fonts/fonts-master/* $google_fonts
+      wget -q -O ${dir}/${file} ${url}
+      unzip -qq ${dir}/${file} -d ${dir}
+      sudo mkdir -p ${HOME}/.fonts/google-fonts
+      sudo mv ${dir}/fonts-master/* ${HOME}/.fonts/google-fonts
       sudo fc-cache -f > /dev/null
-      rm -rf /tmp/google-fonts
+      rm -rf ${dir}
 
       ok "Successfully installed Google Fonts"
     else
@@ -78,24 +75,21 @@ install_fonts() {
     then
       local url="https://github.com/chrissimpkins/Hack/releases/download"
       local file="Hack-v${HACK_VERSION/./_}-otf.tar.gz"
+      local dir=$(mktemp -d)
 
-      if [ ! -d /tmp/hack/otf ]
-      then
-        mkdir -p /tmp/hack/otf
-      fi
-
-      if [ ! -d ${HOME}/.fonts/hack ]
+      if [ ! -d "${HOME}/.fonts/hack" ]
       then
         sudo mkdir -p ${HOME}/.fonts/hack
       fi
+      mkdir ${dir}/otf
 
       info "Installing Hack..."
 
-      wget -q -O /tmp/hack/${file} ${url}/v${HACK_VERSION}/${file}
-      tar -xzf /tmp/hack/${file} -C /tmp/hack/otf
-      sudo mv /tmp/hack/otf/* ${HOME}/.fonts/hack
+      wget -q -O ${dir}/${file} ${url}/v${HACK_VERSION}/${file}
+      tar -xzf ${dir}/${file} -C ${dir}/otf
+      sudo mv ${dir}/otf/* ${HOME}/.fonts/hack
       sudo fc-cache -f > /dev/null
-      rm -rf /tmp/hack
+      rm -rf ${dir}
 
       ok "Successfully installed Hack $HACK_VERSION"
     else
@@ -112,24 +106,20 @@ install_fonts() {
     then
       local url="https://github.com/FortAwesome/Font-Awesome/archive"
       local file="v${FONT_AWESOME_VERSION}.tar.gz"
+      local dir=$(mktemp -d)
 
-      if [ ! -d /tmp/font-awesome ]
-      then
-        mkdir /tmp/font-awesome
-      fi
-
-      if [ ! -d ${HOME}/.fonts/font-awesome ]
+      if [ ! -d "${HOME}/.fonts/font-awesome" ]
       then
         sudo mkdir -p ${HOME}/.fonts/font-awesome
       fi
 
       info "Installing FontAwesome..."
 
-      wget -q -O /tmp/font-awesome/${file} ${url}/${file}
-      tar -xzf /tmp/font-awesome/${file} -C /tmp/font-awesome
-      sudo mv /tmp/font-awesome/Font-Awesome-${FONT_AWESOME_VERSION}/fonts/* ${HOME}/.fonts/font-awesome
+      wget -q -O ${dir}/${file} ${url}/${file}
+      tar -xzf ${dir}/${file} -C ${dir}
+      sudo mv ${dir}/Font-Awesome-${FONT_AWESOME_VERSION}/fonts/* ${HOME}/.fonts/font-awesome
       sudo fc-cache -f > /dev/null
-      rm -rf /tmp/font-awesome
+      rm -rf ${dir}
 
       ok "Successfully installed FontAwesome $FONT_AWESOME_VERSION"
     else
@@ -141,25 +131,20 @@ install_fonts() {
 }
 
 install_golang() {
-  # install Golang
   if ! is_installed go
   then
     if ask "Do you wish to install Golang?" Y
     then
       local url="https://storage.googleapis.com/golang"
       local file="go${GO_VERSION}.linux-amd64.tar.gz"
-
-      if [ ! -d /tmp/golang ]
-      then
-        mkdir /tmp/golang
-      fi
+      local dir=$(mktemp -d)
 
       info "Installing Golang..."
 
-      wget -q -P /tmp/golang ${url}/${file}
-      tar -xzf /tmp/golang/${file} -C /tmp/golang
-      sudo mv /tmp/golang/go /usr/local
-      rm -rf /tmp/golang
+      wget -q -P ${dir} ${url}/${file}
+      tar -xzf ${dir}/${file} -C ${dir}
+      sudo mv ${dir}/go /usr/local
+      rm -rf ${dir}
 
       ok "Successfully installed Golang $GO_VERSION"
     else
@@ -202,10 +187,11 @@ install_i3() {
   then
     if ask "Do you wish to install i3blocks?" Y
     then
+      local dir=$(mktemp -d)
       info "Installing i3blocks"
-      git clone -q https://github.com/vivien/i3blocks.git /tmp/i3blocks > /dev/null
-      sudo make install -C /tmp/i3blocks
-      rm -rf /tmp/i3blocks
+      git clone -q https://github.com/vivien/i3blocks.git ${dir} > /dev/null
+      sudo make install -C ${dir}
+      rm -rf ${dir}
       ok "Successfully installed i3blocks"
     fi
   else
@@ -242,6 +228,7 @@ main() {
     git-core \
     curl \
     wget \
+    unzip \
     scrot \
     imagemagick \
     feh \
