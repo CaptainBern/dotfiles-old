@@ -6,6 +6,34 @@ HACK_VERSION=${HACK_VERSION:-"2.020"}
 FONT_AWESOME_VERSION=${FONT_AWESOME_VERSION:-"4.7.0"}
 GO_VERSION=${GO_VERSION:-"1.7.1"}
 
+TESTING=$(cat <<-EOM
+deb     http://ftp.debian.org/debian/    testing main contrib non-free
+deb-src http://ftp.debian.org/debian/    testing main contrib non-free
+deb     http://security.debian.org/      testing/updates  main contrib non-free
+EOM
+)
+
+BACKPORTS=$(cat <<-EOM
+deb http://ftp.debian.org/debian jessie-backports main contrib non-free
+EOM
+)
+
+configure_apt() {
+  if [ ! -f "/etc/apt/sources.list.d/jessie_testing.list" ]
+  then
+    echo "$TESTING" > /tmp/jessie_testing.list
+    sudo mv /tmp/jessie_testing.list /etc/apt/sources.list.d/
+  fi
+
+  if [ ! -f "/etc/apt/sources.list.d/jessie_backports.list" ]
+  then
+    echo "$BACKPORTS" > /tmp/jessie_backports.list
+    sudo mv /tmp/jessie_backports.list /etc/apt/sources.list.d/
+  fi
+
+  sudo apt-get -qq update
+}
+
 install_fonts() {
   if [ ! -d "${HOME}/.fonts" ]
   then
@@ -149,16 +177,6 @@ install_urxvt() {
     if ask "Do you wish to install rxvt-unicode?" Y
     then
       info "Installing rxvt-unicode..."
-
-      cat > /tmp/jessie_testing.list <<- EOM
-			deb     http://ftp.debian.org/debian/    testing main contrib non-free
-			deb-src http://ftp.debian.org/debian/    testing main contrib non-free
-			deb     http://security.debian.org/      testing/updates  main contrib non-free
-			EOM
-
-      sudo cp /tmp/jessie_testing.list /etc/apt/sources.list.d/
-      rm /tmp/jessie_testing.list
-      sudo apt-get -qq update
       sudo apt-get -t testing -qq -y install rxvt-unicode
       ok "Successfully installed rxvt-unicode"
     fi
@@ -173,11 +191,6 @@ install_i3() {
     if ask "Do you wish to install i3?" Y
     then
       info "Installing i3..."
-
-      echo "deb http://ftp.debian.org/debian jessie-backports main" > /tmp/jessie_backports.list
-
-      sudo cp /tmp/jessie_backports.list /etc/apt/sources.list.d/
-      rm /tmp/jessie_backports.list
       sudo apt-get -t jessie-backports -qq -y install i3 i3lock suckless-tools
       ok "Successfully installed i3"
     fi
@@ -218,7 +231,8 @@ main() {
   source $DOTFILES_ROOT/bootstrap/utils.sh
 
   info "Installing dependencies"
-  sudo apt-get -qq update
+
+  configure_apt
   if ask "Run apt-get upgrade?" Y
   then
     sudo apt-get -qq -y upgrade
@@ -231,7 +245,8 @@ main() {
     scrot \
     imagemagick \
     feh \
-    network-manager
+    network-manager \
+    numlockx
 
   install_fonts
   install_golang

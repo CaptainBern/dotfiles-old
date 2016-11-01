@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Icon stolen from https://github.com/meskarune/i3lock-fancy
+
 set -e
 trap cleanup EXIT
 
@@ -8,10 +10,10 @@ IMAGE="$(mktemp XXXXXXXXXXXXXXXX.png)"
 
 usage() {
 cat <<EOF
-usage: $(basename $0) [-h] [-i icon]
+usage: $(basename $0) [-h] [-i icon] [-d dark-icon] [-t threshold]
   general:
-    -h, --help      print this message
-    -i, --icon      set the icon
+    -h, --help    print this message
+    -i, --icon    set the icon
 EOF
 }
 
@@ -44,7 +46,7 @@ lock() {
           PX=$(($SROX + $SRX/2 - $RX/2))
           PY=$(($SROY + $SRY/2 - $RY/2))
 
-          convert $IMAGE $LOCK_ICON -geometry +$PX+$PY -composite -matte $IMAGE
+          convert $IMAGE -level 0%,100%,0.6 $LOCK_ICON -geometry +$PX+$PY -composite -matte $IMAGE
       done
   fi
 
