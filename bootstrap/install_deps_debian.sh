@@ -178,6 +178,8 @@ install_urxvt() {
       else
         warn "'testing' repo not in apt-sources! Please add it in order to install rxvt-unicode v$URXVT_VERSION"
       fi
+    else
+      warn "If you install i3, make sure to edit the '\$editor' variable in $DOTFILES_ROOT/i3/i3.symlink/config accordingly!"
     fi
   else
     ok "rxvt-unicode is already installed"

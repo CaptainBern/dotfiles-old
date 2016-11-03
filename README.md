@@ -27,9 +27,7 @@ The following dependencies are optional. The installation script will prompt you
 
 ## Installation
 
-**WARNING**: If you are not running on Debian, install `i3` and `urxvt-unicode` yourself.
-The installation script will use jessie-backports to install the latest `i3` and the
-Debian testing repository to install the latest version of `urxvt-unicode`.
+(If you plan on installing i3 via the installation script, make sure you install xorg first if you haven't yet)
 
 To install:
 ```sh
