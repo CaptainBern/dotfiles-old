@@ -25,6 +25,6 @@ command=date "+%H:%M"
 interval=30
 label=
 
-[shutdown_menu]
+[power_menu]
 full_text=
-command=$HOME/scripts/shutdown_menu && echo ""
+command=$HOME/scripts/power_menu && echo ""

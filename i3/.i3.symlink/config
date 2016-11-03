@@ -11,6 +11,23 @@ set $mod Mod4
 # use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
+# keyboard settings (for an azerty keyboard in my case)
+set $left   j
+set $right  k
+set $up     l
+set $down   m
+
+set $one    ampersand
+set $two    eacute
+set $three  quotedbl
+set $four   apostrophe
+set $five   parenleft
+set $six    section
+set $seven  egrave
+set $eight  exclam
+set $nine   ccedilla
+set $zero   agrave
+
 #############################################
 #                  Keymaps                  #
 #############################################
@@ -85,6 +102,9 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+# open the power menu
+bindsym $mod+Shift+p exec "powermenu"
+
 #############################################
 #                 Workspace                #
 #############################################
@@ -101,28 +121,28 @@ set $ws9  "9"
 set $ws10 "10"
 
 # switch to workspace
-bindsym $mod+ampersand workspace $ws1
-bindsym $mod+eacute workspace $ws2
-bindsym $mod+quotedbl workspace $ws3
-bindsym $mod+apostrophe workspace $ws4
-bindsym $mod+parenleft workspace $ws5
-bindsym $mod+section workspace $ws6
-bindsym $mod+egrave workspace $ws7
-bindsym $mod+exclam workspace $ws8
-bindsym $mod+ccedilla workspace $ws9
-bindsym $mod+agrave workspace $ws10
+bindsym $mod+$one workspace $ws1
+bindsym $mod+$two workspace $ws2
+bindsym $mod+$three workspace $ws3
+bindsym $mod+$four workspace $ws4
+bindsym $mod+$five workspace $ws5
+bindsym $mod+$six workspace $ws6
+bindsym $mod+$seven workspace $ws7
+bindsym $mod+$eight workspace $ws8
+bindsym $mod+$nine workspace $ws9
+bindsym $mod+$zero workspace $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+ampersand move container to workspace $ws1
-bindsym $mod+Shift+eacute move container to workspace $ws2
-bindsym $mod+Shift+quotedbl move container to workspace $ws3
-bindsym $mod+Shift+apostrophe move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+section move container to workspace $ws6
-bindsym $mod+Shift+egrave move container to workspace $ws7
-bindsym $mod+Shift+exclam move container to workspace $ws8
-bindsym $mod+Shift+ccedilla move container to workspace $ws9
-bindsym $mod+Shift+agrave move container to workspace $ws10
+bindsym $mod+Shift+one move container to workspace $ws1
+bindsym $mod+Shift+$two move container to workspace $ws2
+bindsym $mod+Shift+$three move container to workspace $ws3
+bindsym $mod+Shift+$four move container to workspace $ws4
+bindsym $mod+Shift+$five move container to workspace $ws5
+bindsym $mod+Shift+$six move container to workspace $ws6
+bindsym $mod+Shift+$seven move container to workspace $ws7
+bindsym $mod+Shift+$eight move container to workspace $ws8
+bindsym $mod+Shift+$nine move container to workspace $ws9
+bindsym $mod+Shift+$zero move container to workspace $ws10
 
 force_display_urgency_hint 0 ms
 workspace_auto_back_and_forth yes
@@ -133,7 +153,8 @@ focus_on_window_activation urgent
 #############################################
 
 # resize window (you can also use the mouse for that)
-mode "resize" {
+set $mode_resize resize
+mode $mode_resize {
         # These bindings trigger as soon as you enter the resize mode
         bindsym $left       resize shrink width 10 px or 10 ppt
         bindsym $down       resize grow height 10 px or 10 ppt
@@ -149,8 +170,7 @@ mode "resize" {
         bindsym Return mode "default"
         bindsym Escape mode "default"
 }
-
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode "$mode_resize"
 
 #############################################
 #                 Colors                    #

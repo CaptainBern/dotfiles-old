@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+POWER_MENU=${POWER_MENU:-"$HOME/scripts/power_menu"}
+
+if [ -f $POWER_MENU ]
+then
+  $POWER_MENU
+else
+  echo "Power-menu script does not exist! (\$POWER_MENU='$POWER_MENU')"
+  exit 1
+fi
