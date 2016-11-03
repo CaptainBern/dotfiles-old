@@ -40,15 +40,15 @@ bootstrap/install.sh
 
 ## Todo
 
-x fonts (https://github.com/google/fonts)
-x install latest rxvt-unicode
-x colors (TODO: still gotta fix i3 mode colors)
-- fix power menu.
-- network stuff in i3
-- sound in i3bar
-- i3lock script
-- firefox-developer installation option (download via wget and install stuff)
-- weechat
-- workspaces for browser, weechat etc
-- vim
-- pass
+- [x] fonts (https://github.com/google/fonts)
+- [x] install latest rxvt-unicode
+- [x] colors (TODO: still gotta fix i3 mode colors)
+- [x] fix power menu.
+- [ ] network stuff in i3
+- [ ] sound in i3bar
+- [x] i3lock script
+- [ ] firefox-developer installation option (download via wget and install stuff)
+- [ ] weechat
+- [ ] keybinds to open browser etc in specific workspaces
+- [ ] vim
+- [ ] pass
