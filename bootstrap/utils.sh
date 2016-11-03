@@ -22,7 +22,12 @@ is_installed() {
 }
 
 is_font_installed() {
-	fc-list | grep -i "$1" >/dev/null
+	fc-list | grep -q -i "$1"
+}
+
+is_repo_in_sources_list() {
+  # credit to http://askubuntu.com/a/182695
+  find /etc/apt/ -name *.list | xargs cat | grep  ^[[:space:]]*deb | grep -v deb-src | grep -q -i "\<${1}\>"
 }
 
 ask() {

@@ -2,6 +2,8 @@
 
 set -e
 
+I3_VERSION="4.12-2~bpo8+1"
+URXVT_VERSION="9.22-1+b1"
 HACK_VERSION=${HACK_VERSION:-"2.020"}
 FONT_AWESOME_VERSION=${FONT_AWESOME_VERSION:-"4.7.0"}
 GO_VERSION=${GO_VERSION:-"1.7.1"}
@@ -19,17 +21,25 @@ EOM
 )
 
 configure_apt() {
-  if [ ! -f "/etc/apt/sources.list.d/jessie_testing.list" ]
+  if ! is_repo_in_sources_list "testing"
   then
-    dir=$(mktemp -d)
-    echo "$TESTING" > /tmp/jessie_testing.list
-    sudo mv /tmp/jessie_testing.list /etc/apt/sources.list.d/
+    if ask "Add the Debian (jessie) testing repository to apt-sources? (Used to install rxvt-unicode v${URXVT_VERSION})" Y
+    then
+      dir=$(mktemp -d)
+      echo "$TESTING" > /tmp/jessie_testing.list
+      sudo mv /tmp/jessie_testing.list /etc/apt/sources.list.d/
+      ok "Successfully added the debian testing repo to your apt-sources."
+    fi
   fi
 
-  if [ ! -f "/etc/apt/sources.list.d/jessie_backports.list" ]
+  if ! is_repo_in_sources_list "jessie-backports"
   then
-    echo "$BACKPORTS" > /tmp/jessie_backports.list
-    sudo mv /tmp/jessie_backports.list /etc/apt/sources.list.d/
+    if ask "Add the Debian (jessie) backports repository to apt-sources? (Used to install i3 v${I3_VERSION})" Y
+    then
+      echo "$BACKPORTS" > /tmp/jessie_backports.list
+      sudo mv /tmp/jessie_backports.list /etc/apt/sources.list.d/
+      ok "Successfully added the debian backports repo to your apt-sources."
+    fi
   fi
 
   sudo apt-get -qq update
@@ -91,7 +101,7 @@ install_fonts() {
       sudo fc-cache -f > /dev/null
       rm -rf ${dir}
 
-      ok "Successfully installed Hack $HACK_VERSION"
+      ok "Successfully installed Hack v$HACK_VERSION"
     else
       warn "If you install i3, make sure to change the font settings in $DOTFILES_ROOT/i3/.i3.symlink/config and $DOTFILES_ROOT/system/.Xresources.symlink accordingly!"
     fi
@@ -121,7 +131,7 @@ install_fonts() {
       sudo fc-cache -f > /dev/null
       rm -rf ${dir}
 
-      ok "Successfully installed FontAwesome $FONT_AWESOME_VERSION"
+      ok "Successfully installed FontAwesome v$FONT_AWESOME_VERSION"
     else
       warn "If you install i3, make sure to change the font settings in $DOTFILES_ROOT/i3/.i3.symlink/config accordingly!"
     fi
@@ -146,7 +156,7 @@ install_golang() {
       sudo mv ${dir}/go /usr/local
       rm -rf ${dir}
 
-      ok "Successfully installed Golang $GO_VERSION"
+      ok "Successfully installed Golang v$GO_VERSION"
     else
       warn "If you install golang yourself, make sure to edit $DOTFILES_ROOT/go/path.zsh accordingly!"
     fi
@@ -156,14 +166,18 @@ install_golang() {
 }
 
 install_urxvt() {
-  # install urxvt
   if ! is_installed rxvt-unicode
   then
     if ask "Do you wish to install rxvt-unicode?" Y
     then
-      info "Installing rxvt-unicode..."
-      sudo apt-get -t testing -qq -y install rxvt-unicode
-      ok "Successfully installed rxvt-unicode"
+      if is_repo_in_sources_list "testing"
+      then
+        info "Installing rxvt-unicode..."
+        sudo apt-get -t testing -qq -y install ncurses-term rxvt-unicode=${URXVT_VERSION}
+        ok "Successfully installed rxvt-unicode"
+      else
+        warn "'testing' repo not in apt-sources! Please add it in order to install rxvt-unicode v$URXVT_VERSION"
+      fi
     fi
   else
     ok "rxvt-unicode is already installed"
@@ -175,9 +189,14 @@ install_i3() {
   then
     if ask "Do you wish to install i3?" Y
     then
-      info "Installing i3..."
-      sudo apt-get -t jessie-backports -qq -y install i3 i3lock suckless-tools
-      ok "Successfully installed i3"
+      if is_repo_in_sources_list "jessie-backports"
+      then
+        info "Installing i3..."
+        sudo apt-get -t jessie-backports -qq -y install i3=${I3_VERSION} suckless-tools
+        ok "Successfully installed i3"
+      else
+        warn "'jessie-backports' repo is not in apt-sources! Please add it in order to install i3 v$I3_VERSION"
+      fi
     fi
   else
     ok "i3 is already installed"
@@ -224,6 +243,7 @@ main() {
     sudo apt-get -qq -y upgrade
   fi
 
+  info "Installing common dependencies..."
   sudo apt-get -qq -y install \
     git-core \
     curl \
@@ -232,6 +252,7 @@ main() {
     scrot \
     imagemagick \
     feh \
+    xclip \
     network-manager \
     numlockx
 
