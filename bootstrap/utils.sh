@@ -30,6 +30,16 @@ is_repo_in_sources_list() {
   find /etc/apt/ -name *.list | xargs cat | grep  ^[[:space:]]*deb | grep -v deb-src | grep -q -i "\<${1}\>"
 }
 
+delete() {
+  if [[ -d "$1" ]]
+  then
+    rm -rf "$1"
+  elif [[ -f "$1" ]]
+  then
+    rm "$f"
+  fi
+}
+
 ask() {
     # http://djm.me/ask
     local prompt default REPLY

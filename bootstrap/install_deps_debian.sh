@@ -25,7 +25,7 @@ configure_apt() {
   then
     if ask "Add the Debian (jessie) testing repository to apt-sources? (Used to install rxvt-unicode v${URXVT_VERSION})" Y
     then
-      dir=$(mktemp -d)
+      local dir=$(mktemp -d)
       echo "$TESTING" > /tmp/jessie_testing.list
       sudo mv /tmp/jessie_testing.list /etc/apt/sources.list.d/
       ok "Successfully added the debian testing repo to your apt-sources."
@@ -68,7 +68,7 @@ install_fonts() {
       sudo mkdir -p ${HOME}/.fonts/google-fonts
       sudo mv ${dir}/fonts-master/* ${HOME}/.fonts/google-fonts
       sudo fc-cache -f > /dev/null
-      rm -rf ${dir}
+      delete ${dir}
 
       ok "Successfully installed Google Fonts"
     else
@@ -81,7 +81,7 @@ install_fonts() {
   # install Hack
   if ! is_font_installed "Hack"
   then
-    if ask "Do you wish to install Hack?" Y
+    if ask "Do you wish to install Hack (the font)?" Y
     then
       local url="https://github.com/chrissimpkins/Hack/releases/download"
       local file="Hack-v${HACK_VERSION/./_}-otf.tar.gz"
@@ -99,7 +99,7 @@ install_fonts() {
       tar -xzf ${dir}/${file} -C ${dir}/otf
       sudo mv ${dir}/otf/* ${HOME}/.fonts/hack
       sudo fc-cache -f > /dev/null
-      rm -rf ${dir}
+      delete ${dir}
 
       ok "Successfully installed Hack v$HACK_VERSION"
     else
@@ -129,7 +129,7 @@ install_fonts() {
       tar -xzf ${dir}/${file} -C ${dir}
       sudo mv ${dir}/Font-Awesome-${FONT_AWESOME_VERSION}/fonts/* ${HOME}/.fonts/font-awesome
       sudo fc-cache -f > /dev/null
-      rm -rf ${dir}
+      delete ${dir}
 
       ok "Successfully installed FontAwesome v$FONT_AWESOME_VERSION"
     else
@@ -154,7 +154,7 @@ install_golang() {
       wget -q -P ${dir} ${url}/${file}
       tar -xzf ${dir}/${file} -C ${dir}
       sudo mv ${dir}/go /usr/local
-      rm -rf ${dir}
+      delete ${dir}
 
       ok "Successfully installed Golang v$GO_VERSION"
     else
@@ -212,7 +212,7 @@ install_i3() {
       info "Installing i3blocks"
       git clone -q https://github.com/vivien/i3blocks.git ${dir} > /dev/null
       sudo make install -C ${dir}
-      rm -rf ${dir}
+      delete ${dir}
       ok "Successfully installed i3blocks"
     fi
   else
