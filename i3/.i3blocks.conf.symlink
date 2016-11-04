@@ -27,4 +27,4 @@ label=
 
 [power_menu]
 full_text=
-command=$HOME/scripts/power_menu && echo ""
+command=powermenu && echo ""
