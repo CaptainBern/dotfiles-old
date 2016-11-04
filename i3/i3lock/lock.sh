@@ -10,7 +10,7 @@ IMAGE="$(mktemp XXXXXXXXXXXXXXXX.png)"
 
 usage() {
 cat <<EOF
-usage: $(basename $0) [-h] [-i icon] [-d dark-icon] [-t threshold]
+usage: $(basename $0) [-h] [-i icon]
   general:
     -h, --help    print this message
     -i, --icon    set the icon
