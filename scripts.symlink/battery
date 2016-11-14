@@ -89,15 +89,9 @@ print() {
   status=$(cat /sys/class/power_supply/${BATTERY}/status)
 
   battery_icon=$(battery $capacity)
-  fulltext="$battery_icon $capacity%"
-  if [ "$BATTERY_COLORS" = true ] && [ $capacity -gt $CRITICAL_LEVEL ]
-  then
-    fulltext="<span color=\"$(color $capacity)\">$battery_icon</span> $capacity%"
-  fi
-
   case $status in
     "Charging")
-      fulltext="$charging $fulltext"
+      battery_icon=$charging
       ;;
     "Full")
       ;;
@@ -106,6 +100,12 @@ print() {
     "Discharging"|"Unknown")
       ;;
   esac
+
+  fulltext="$battery_icon $capacity%"
+  if [ "$BATTERY_COLORS" = true ] && [ $capacity -gt $CRITICAL_LEVEL ]
+  then
+    fulltext="<span color=\"$(color $capacity)\">$battery_icon</span> $capacity%"
+  fi
 
   echo $fulltext
 

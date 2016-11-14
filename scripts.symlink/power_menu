@@ -14,7 +14,7 @@ FOREGROUND_COLOR=#ebdbb2
 HIGHLIGHTED_BACKGROUND_COLOR=#ebdbb2
 HIGHLIGHTED_FOREGROUND_COLOR=#282828
 
-LOCK_SCRIPT="${HOME}/.dotfiles/i3/i3lock/lock.sh"
+LOCK_SCRIPT="${HOME}/.config/i3lock/lock.sh"
 
 declare -a menu
 

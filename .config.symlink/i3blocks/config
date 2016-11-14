@@ -13,10 +13,10 @@ signal=1
 
 [battery]
 command=$HOME/scripts/battery -c
-interval=persist
+interval=30
 
 [date]
-command=date "+%d-%m-%y"
+command=date "+%a %d %b"
 interval=10
 label=
 

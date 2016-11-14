@@ -3,52 +3,27 @@
 set -e
 
 install_deps() {
-  if ! is_installed "lsb_release"
+  if is_installed "lsb_release"
   then
-    if ask "Do you wish to install lsb-release? (Required in order to indentify your distro)" Y
-    then
-      info "Installing lsb-release"
-      sudo apt-get -qq -y install lsb-release
-      ok "Successfully installed lsb-release"
-    else
-      warn "Cannot install dependencies without identifying your distro."
-      return
-    fi
+    local distro=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
+  elif [ -f /etc/os-release ]
+  then
+    local distro=$(cat /etc/os-release | sed -n 's/^ID=//p' | tr '[:upper:]' '[:lower:]')
   fi
 
-  local distro=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
   if [[ -f "$DOTFILES_ROOT/bootstrap/install_deps_${distro}.sh" ]]
   then
     if ask "Do you wish to install the dependencies for your distro?" Y
     then
+      info "Installing dependencies"
       ${DOTFILES_ROOT}/bootstrap/install_deps_${distro}.sh
+      info "Done installing dependencies"
+      info "If I were you, I'd reboot."
     fi
   else
-    warn "Failed to find the dependency-installation script for your distro! ($distro)"
+    warn "Failed to find the dependency-installation script for your distro! (Either install lsb-release or check if your distro is supported!)"
+    exit 1
   fi
-}
-
-install_zsh() {
-	if ! is_installed zsh
-	then
-		info "Zsh is not installed yet. Installing..."
-		sudo apt-get -qq -y install zsh
-		ok "Successfully installed Zsh"
-	else
-		ok "Zsh is already installed"
-	fi
-
-	if [[ ! -d "$ZSH" ]]
-	then
-		info "Oh-My-Zsh is not installed yet. Installing..."
-    git clone -q git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh > /dev/null
-    ok "Successfully installed Oh-My-Zsh"
-	else
-		ok "Oh-My-Zsh is already installed"
-	fi
-
-  info "Switching default shell to Zsh"
-  chsh -s "$(which zsh)"
 }
 
 # Credit to https://github.com/holman/dotfiles/
@@ -78,11 +53,9 @@ main() {
   fi
 
 	source $DOTFILES_ROOT/bootstrap/utils.sh
-
+  
   install_deps
-  install_zsh
   install_dotfiles
-  env zsh
 }
 
 main

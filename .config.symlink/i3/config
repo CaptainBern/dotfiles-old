@@ -2,7 +2,7 @@
 #         General configuration             #
 #############################################
 
-set $editor urxvt
+set $editor termite
 
 font pango:Open Sans, FontAwesome Bold 11
 
@@ -231,7 +231,7 @@ bar {
           separator   $bg0
 
           # name              border  bg    text
-          focused_workspace   $bg1    $bg1  $fg1
+          focused_workspace   $fg1    $bg0  $fg1
           active_workspace    $bg0    $bg0  $fg4
           inactive_workspace  $bg0    $bg0  $fg4
           urgent_workspace    $red    $red  $fg1
@@ -247,3 +247,10 @@ bar {
 #for_window [class="^.*"] border pixel 5
 #new_window none
 #for_window [class=(?i)urxvt] floating enable
+
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="bubble"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Preferences"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable

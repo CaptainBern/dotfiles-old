@@ -5,8 +5,8 @@
 set -e
 trap cleanup EXIT
 
-LOCK_ICON="${HOME}/.dotfiles/i3/i3lock/lock.png"
-DARK_LOCK_ICON="${HOME}/.dotfiles/i3/i3lock/lockdark.png"
+LOCK_ICON="${HOME}/.config/i3lock/lock.png"
+DARK_LOCK_ICON="${HOME}/.config/i3lock/lockdark.png"
 THRESHOLD=60
 IMAGE="$(mktemp XXXXXXXXXXXXXXXX.png)"
 

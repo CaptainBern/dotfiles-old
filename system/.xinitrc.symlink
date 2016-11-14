@@ -1,6 +1,7 @@
 #!/bin/bash
 
-xrdb -load ~/.Xresources
+[[ -f ~/.Xresources ]] && xrdb -merge -I$HOME ~/.Xresources
+
 xset s off
 numlockx &
 setxkbmap be
