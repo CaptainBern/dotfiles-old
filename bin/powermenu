@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-POWER_MENU=${POWER_MENU:-"$HOME/scripts/power_menu"}
+POWER_MENU=${POWER_MENU:="$HOME/scripts/power_menu"}
 
 if [ -f $POWER_MENU ]
 then

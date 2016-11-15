@@ -6,10 +6,16 @@ export ZSH=$HOME/.oh-my-zsh
 # Path to the dotfiles folder
 export DOT_FILES=$HOME/.dotfiles
 
+# Load .dotconfig (user specific settings)
+if [[ -e ~/.dotconfig ]]
+then
+  source ~/.dotconfig
+fi
+
 # Stash your environment variables in ~/.localrc. This means they'll stay out
 # of your main dotfiles repository (which may be public, like this one), but
 # you'll have access to them in your scripts.
-if [[ -a ~/.localrc ]]
+if [[ -e ~/.localrc ]]
 then
 	source ~/.localrc
 fi

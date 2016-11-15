@@ -6,7 +6,7 @@ install_deps() {
   if is_installed "lsb_release"
   then
     local distro=$(lsb_release -si | tr '[:upper:]' '[:lower:]')
-  elif [ -f /etc/os-release ]
+  elif [ -f "/etc/os-release" ]
   then
     local distro=$(cat /etc/os-release | sed -n 's/^ID=//p' | tr '[:upper:]' '[:lower:]')
   fi
@@ -42,6 +42,26 @@ install_dotfiles() {
 	ok "Successfully installed dotfiles!"
 }
 
+dotconfig() {
+  if [[ -z "$WORKSPACE" ]]
+  then
+    while true
+    do
+      echo -n "Please enter your workspace directory: "
+      read REPLY </dev/tty
+
+      if [ -d `eval echo ${REPLY//>}` ]
+      then
+        ok "Setting \$WORKSPACE to $REPLY"
+        echo "export WORKSPACE=$REPLY" >> ${HOME}/.dotconfig
+        return 0
+      else
+        warn "$REPLY is not a directory!"
+      fi
+    done
+  fi
+}
+
 main() {
 	cd "$(dirname "$0")/.."
 	export DOTFILES_ROOT=$(pwd -P)
@@ -53,9 +73,10 @@ main() {
   fi
 
 	source $DOTFILES_ROOT/bootstrap/utils.sh
-  
+
   install_deps
   install_dotfiles
+  dotconfig
 }
 
 main
