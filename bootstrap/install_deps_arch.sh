@@ -56,7 +56,7 @@ main() {
     termite \
     wget \
     curl \
-    scrot \
+    maim \
     imagemagick \
     feh \
     xclip \
@@ -71,6 +71,9 @@ main() {
     i3 \
     i3blocks \
     rofi \
+    pulseaudio \
+    alsa-utils \
+    pavucontrol \
     firefox-aurora
 
   install_zsh

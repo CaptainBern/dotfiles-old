@@ -18,7 +18,6 @@ install_deps() {
       info "Installing dependencies"
       ${DOTFILES_ROOT}/bootstrap/install_deps_${distro}.sh
       info "Done installing dependencies"
-      info "If I were you, I'd reboot."
     fi
   else
     warn "Failed to find the dependency-installation script for your distro! (Either install lsb-release or check if your distro is supported!)"
@@ -50,7 +49,7 @@ dotconfig() {
       echo -n "Please enter your workspace directory: "
       read REPLY </dev/tty
 
-      if [ -d `eval echo ${REPLY//>}` ]
+      if [ -d "$REPLY" ]
       then
         ok "Setting \$WORKSPACE to $REPLY"
         echo "export WORKSPACE=$REPLY" >> ${HOME}/.dotconfig
@@ -77,6 +76,8 @@ main() {
   install_deps
   install_dotfiles
   dotconfig
+  info "If I were you, I'd reboot."
+  env zsh
 }
 
 main

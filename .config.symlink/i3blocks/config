@@ -2,18 +2,24 @@ command=$HOME/scripts/$BLOCK_NAME
 separator_block_width=20
 markup=pango
 
-# [wifi]
-# interval=2
-# label=
-
 [volume]
-command=$HOME/scripts/volume
+command=$HOME/scripts/volume i3blocks
 interval=once
 signal=1
+
+[brightness]
+label=  
+command=printf "%.0f " $(xbacklight -get)
+interval=10
+signal=2
 
 [battery]
 command=$HOME/scripts/battery -c
 interval=30
+
+# [wifi]
+# interval=2
+# label=
 
 [date]
 command=date "+%a %d %b"
