@@ -1,4 +1,4 @@
-#include "~/.colors/gruvbox"
+#include ".colors/gruvbox"
 
 ! Xft settings
 Xft.autohint:   0

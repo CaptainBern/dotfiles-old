@@ -9,7 +9,7 @@ signal=1
 
 [brightness]
 label=  
-command=printf "%.0f " $(xbacklight -get)
+command=$HOME/scripts/brightness
 interval=10
 signal=2
 
@@ -17,9 +17,14 @@ signal=2
 command=$HOME/scripts/battery -c
 interval=30
 
-# [wifi]
-# interval=2
-# label=
+#[wifi]
+#label=
+#interval=2
+
+[ethernet]
+label=
+command=$HOME/scripts/ethernet i3blocks
+interval=2
 
 [date]
 command=date "+%a %d %b"

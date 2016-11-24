@@ -52,18 +52,36 @@ dotconfig() {
       if [ -d "$REPLY" ]
       then
         ok "Setting \$WORKSPACE to $REPLY"
-        echo "export WORKSPACE=$REPLY" >> ${HOME}/.dotconfig
-        return 0
+        echo -e "# Workspace\nexport WORKSPACE=$REPLY\n" >> $HOME/.dotconfig
+        break
       else
         warn "$REPLY is not a directory!"
+      fi
+    done
+  fi
+
+  if [[ -z "$WALLPAPER" ]]
+  then
+    while true
+    do
+      echo -n "Please enter the path to your desired wallpaper: "
+      read REPLY </dev/tty
+
+      if [ -f "$REPLY" ]
+      then
+        ok "Setting \$WALLPAPER to $REPLY"
+        echo -e "# Wallpaper\nexport WALLPAPER=$REPLY\n" >> $HOME/.dotconfig
+        break
+      else
+        warn "$REPLY is not a file!"
       fi
     done
   fi
 }
 
 main() {
-	cd "$(dirname "$0")/.."
-	export DOTFILES_ROOT=$(pwd -P)
+  cd "$(dirname "$0")/.."
+  export DOTFILES_ROOT=$(pwd -P)
 
   if [[ "$DOTFILES_ROOT" != "$HOME/.dotfiles" ]]
   then

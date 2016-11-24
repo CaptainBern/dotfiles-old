@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+if [ -z "$WALLPAPER" ]
+then
+  echo "\$WALLPAPER not set!"
+  exit 1
+else
+  feh --bg-fill $WALLPAPER
+fi

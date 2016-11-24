@@ -5,31 +5,22 @@ cat <<EOF
 usage: $(basename $0) [-h] [print] [i3blocks]
   general:
     -h, --help      print this message
-    print           print the status in a fancy format
-    i3blocks        use the script with i3blocks (left-click opens nmtui, right click toggles the radio on and off)
+    print           print the brightness
+    i3blocks        use the script with i3blocks (scroll-up increases the brightness, scroll-down decreases)
 EOF
 }
 
-status() {
-  echo $(nmcli radio wifi)
-}
-
 print() {
-  echo "To be finished!"
+  printf "%.0f " $(xbacklight -get)
 }
 
 i3blocks() {
   case "$BLOCK_BUTTON" in
-    1)
-      termite --name "__nmtui__" -e nmtui
+    4)
+      xbacklight -time 0 -inc 1
       ;;
-    3)
-      if [[ $(status) == "enabled" ]]
-      then
-        nmcli radio wifi off
-      else
-        nmcli radio wifi on
-      fi
+    5)
+      xbacklight -time 0 -dec 1
       ;;
   esac
 

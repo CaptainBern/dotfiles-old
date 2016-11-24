@@ -1,9 +1,9 @@
 [options]
 font = Hack 12
-browser = firefox
+browser = firefox-aurora
 cursor_blink = on
 cursor_shape = ibeam
-clickable_url = false
+clickable_url = true
 dynamic_title = true
 geometry = 1000x600
 scrollback_lines = 999999

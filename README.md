@@ -21,11 +21,11 @@ bootstrap/install.sh
 - [x] colors (TODO: still gotta fix i3 mode colors)
 - [x] fix power menu.
 - [ ] network stuff in i3
-- [ ] sound in i3bar
-- [ ] i3 sound/brightness keybinds
+- [x] sound in i3bar
+- [x] i3 sound/brightness keybinds
 - [x] i3lock script
-- [ ] firefox-developer installation option (download via wget and install stuff)
+- [x] firefox-developer
 - [ ] weechat
 - [ ] keybinds to open browser etc in specific workspaces
-- [ ] vim
-- [ ] pass
+- [x] vim
+- [x] pass

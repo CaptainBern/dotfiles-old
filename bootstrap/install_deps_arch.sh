@@ -61,22 +61,38 @@ main() {
     feh \
     xclip \
     numlockx \
-    go
+    networkmanager
 
   install_pacaur
   pacaur --noconfirm --noedit -S \
+    go \
+    rust \
+    cargo \
+    python \
+    ruby \
+    lua \
+    tcl \
     ttf-hack \
     ttf-font-awesome \
     ttf-google-fonts-git \
+    powerline-fonts-git \
+    vim-airline \
     i3 \
     i3blocks \
     rofi \
     pulseaudio \
     alsa-utils \
     pavucontrol \
-    firefox-aurora
+    ranger \
+    screenfetch \
+    pass
 
   install_zsh
+
+  # TODO: firefox fix
+  # after installing firefox-aurora, we need to cleanup the cache because the BUILDPKG is bad
+  # pacaur -S firefox-aurora
+  # rm -rf $HOME/.cache/pacaur/firefox-aurora
 }
 
 main

@@ -25,11 +25,6 @@ is_font_installed() {
 	fc-list | grep -q -i "$1"
 }
 
-is_repo_in_sources_list() {
-  # credit to http://askubuntu.com/a/182695
-  find /etc/apt/ -name *.list | xargs cat | grep  ^[[:space:]]*deb | grep -v deb-src | grep -q -i "\<${1}\>"
-}
-
 ask() {
   # http://djm.me/ask
   local prompt default REPLY

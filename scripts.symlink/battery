@@ -121,7 +121,7 @@ main() {
     case $1 in
       -h|--help )
         usage
-        exit 0
+        exit -1
         ;;
       -b|--bat )
         shift

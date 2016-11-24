@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+
+INTERFACE=
+
+usage() {
+cat <<EOF
+usage: $(basename $0) [-h] [-i interface] [print] [i3blocks]
+  general:
+    -h, --help      print this message
+    -i, --interface the network interface to use (e.g.: enp0s5)
+    print           print the status in a fancy format
+    i3blocks        use the script with i3blocks (left-click opens nmtui, right-click toggles the device on and off)
+EOF
+}
+
+interface() {
+  if [ -z $INTERFACE ]
+  then
+    # see: https://major.io/2015/08/21/understanding-systemds-predictable-network-device-names/
+    local regex="^(eth)([0-9]+)|(en)[pso]([cdfisu0-9]+)"
+    local info=$(nmcli -t -f device,type,state device | grep "ethernet" | grep -io -E "$regex")
+    INTERFACE=$(echo $info | awk -F ':' '{print $1}')
+  fi
+
+  echo $INTERFACE
+}
+
+status() {
+  local interface=$(interface)
+  local info=$(nmcli -t -f device,type,state device | grep -io -E "^($interface):(ethernet):([a-z]+)")
+  echo $info | awk -F ':' '{print $3}'
+}
+
+print() {
+  case $(status) in
+    "unavailable" )
+      fulltext="No connection"
+      ;;
+    "connected" )
+      fulltext="Connected"
+      ;;
+    * )
+      fulltext="Disconnected"
+      ;;
+  esac
+
+  echo $fulltext
+}
+
+i3blocks() {
+  case "$BLOCK_BUTTON" in
+    1)
+      termite --name "__nmtui__" -e nmtui
+      ;;
+    3)
+      if [[ $(status) == "connected" ]]
+      then
+        nmcli device disconnect $(interface) > /dev/null
+      else
+        nmcli device connect $(interface) > /dev/null
+      fi
+      ;;
+  esac
+
+  print
+}
+
+main() {
+  if [[ -z $1 ]]
+  then
+    print
+  else
+    until [[ -z $1 ]]
+    do
+      case $1 in
+        -h|--help )
+          usage
+          exit -1
+          ;;
+        -i|--interface )
+          shift
+          INTERFACE=$1
+          ;;
+        print )
+          print
+          ;;
+        i3blocks )
+          i3blocks
+          ;;
+        * )
+          echo "Invalid option '$1'"
+          exit 1
+          ;;
+      esac
+      shift
+    done
+  fi
+}
+
+main $@

@@ -28,7 +28,7 @@ EOF
 }
 
 get_mixer() {
-  if [ -n $MIXER ]
+  if [ -z $MIXER ]
   then
     if [ -n "$(lsmod | grep pulse)" ]
     then
@@ -45,7 +45,7 @@ get_mixer() {
 }
 
 get_scontrol() {
-  if [ -n $SCONTROL ]
+  if [ -z $SCONTROL ]
   then
     local mixer=$(get_mixer)
     SCONTROL=$(amixer -D $mixer scontrols | sed -n "s/Simple mixer control '\([A-Za-z ]*\)',0/\1/p" | head -n1)
@@ -133,7 +133,7 @@ main() {
       case $1 in
         -h|--help )
           usage
-          exit 0
+          exit -1
           ;;
         -m|--mixer )
           shift
