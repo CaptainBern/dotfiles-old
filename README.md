@@ -13,19 +13,3 @@ git clone https://github.com/CaptainBern/dotfiles.git ~/.dotfiles
 cd ~/.dotfiles
 bootstrap/install.sh
 ```
-
-## Todo
-
-- [x] fonts (https://github.com/google/fonts)
-- [x] install latest rxvt-unicode
-- [x] colors (TODO: still gotta fix i3 mode colors)
-- [x] fix power menu.
-- [ ] network stuff in i3
-- [x] sound in i3bar
-- [x] i3 sound/brightness keybinds
-- [x] i3lock script
-- [x] firefox-developer
-- [ ] weechat
-- [ ] keybinds to open browser etc in specific workspaces
-- [x] vim
-- [x] pass
