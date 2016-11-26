@@ -77,6 +77,7 @@ main() {
     ruby \
     lua \
     tcl \
+    openssh \
     ttf-hack \
     ttf-font-awesome \
     ttf-google-fonts-git \
