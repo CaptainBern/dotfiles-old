@@ -8,7 +8,7 @@ interval=once
 signal=1
 
 [brightness]
-label=  
+label=
 command=$HOME/scripts/brightness i3blocks
 interval=10
 signal=2
