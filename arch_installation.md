@@ -165,7 +165,7 @@ pacman -S grub efibootmgr
 
 Configure `mkinitcpio` in `/etc/mkinitcpio.conf`:
 ```shell
-HOOKS="... encrypt lvm2 block filesystems ..."
+HOOKS="... keymap keyboard block encrypt lvm2 filesystems ..."
 ```
 Then run `mkinitcpio -p linux`.
 
@@ -191,7 +191,7 @@ dd bs=512 count=4 if=/dev/urandom of=/etc/cryptboot_keyfile iflag=fullblock
 
 Add the keyfile to the boot-partition's LUKS header:
 ```shell
-cryptsetup luksAddKey /dev/sdx3 /etc/cryptboot_keyfile
+cryptsetup luksAddKey /dev/sdx2 /etc/cryptboot_keyfile
 ```
 
 Edit /etc/fstab:
@@ -233,4 +233,25 @@ pacman -S sudo
 Edit `/etc/sudoers` and uncomment `# %wheel      ALL=(ALL) ALL`:
 ```shell
 visudo
+```
+
+## Setup NetworkManager
+
+```shell
+pacaur -S networkmanager dhclient
+```
+
+Tell NetworkManager to use `dhclient` as its dhcp-client:
+```shell
+# Open /etc/NetworkManager/NetworkManager.conf
+# Add 'dhcp=dhclient' under '[main]'. E.g.:
+
+[main]
+dns=default
+dhcp=dhclient
+```
+
+```shell
+systemctl enable NetworkManager.service
+systemctl start NetworkManager.service
 ```
