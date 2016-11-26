@@ -15,7 +15,7 @@ status() {
 }
 
 print() {
-  echo "To be finished!"
+  echo $(status)
 }
 
 i3blocks() {

@@ -9,12 +9,12 @@ signal=1
 
 [brightness]
 label=  
-command=$HOME/scripts/brightness
+command=$HOME/scripts/brightness i3blocks
 interval=10
 signal=2
 
 [battery]
-command=$HOME/scripts/battery -c
+command=$HOME/scripts/battery -b BAT1 -c
 interval=30
 
 #[wifi]

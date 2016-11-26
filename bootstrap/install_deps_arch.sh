@@ -33,13 +33,13 @@ install_zsh() {
   fi
 
   if [[ ! -d "$ZSH" ]]
-	then
-		info "Oh-My-Zsh is not installed yet. Installing..."
+  then
+    info "Oh-My-Zsh is not installed yet. Installing..."
     git clone -q git://github.com/robbyrussell/oh-my-zsh.git ~/.oh-my-zsh > /dev/null
     ok "Successfully installed Oh-My-Zsh"
-	else
-		ok "Oh-My-Zsh is already installed"
-	fi
+  else
+    ok "Oh-My-Zsh is already installed"
+  fi
 
   info "Switching default shell to Zsh"
   chsh -s "$(which zsh)"
@@ -49,6 +49,10 @@ main() {
   source $DOTFILES_ROOT/bootstrap/utils.sh
 
   sudo pacman --noconfirm -S \
+    xorg-server \
+    xorg-xinit \
+    xorg-xrandr \
+    xorg-xbacklight \
     expac \
     yajl \
     git \
@@ -57,6 +61,7 @@ main() {
     wget \
     curl \
     maim \
+    scrot \
     imagemagick \
     feh \
     xclip \
@@ -76,11 +81,12 @@ main() {
     ttf-font-awesome \
     ttf-google-fonts-git \
     powerline-fonts-git \
-    vim-airline \
+    neovim \
     i3 \
     i3blocks \
     rofi \
     pulseaudio \
+    pulseaudio-alsa \
     alsa-utils \
     pavucontrol \
     ranger \

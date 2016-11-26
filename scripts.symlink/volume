@@ -71,11 +71,11 @@ toggle() {
 }
 
 up() {
-  amixer -q -D $(get_mixer) sset $(get_scontrol) $(get_capability)  ${1:-"5"}+ unmute
+  amixer -q -D $(get_mixer) sset $(get_scontrol) $(get_capability)  ${1:-"5"}%+ unmute
 }
 
 down() {
-  amixer -q -D $(get_mixer) sset $(get_scontrol) $(get_capability)  ${1:-"5"}- unmute
+  amixer -q -D $(get_mixer) sset $(get_scontrol) $(get_capability)  ${1:-"5"}%- unmute
 }
 
 icon() {
