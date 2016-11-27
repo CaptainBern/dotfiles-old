@@ -17,9 +17,10 @@ signal=2
 command=$HOME/scripts/battery -b BAT1 -c
 interval=30
 
-#[wifi]
-#label=
-#interval=2
+[wifi]
+label=
+command=$HOME/scripts/wifi i3blocks
+interval=2
 
 [ethernet]
 label=

@@ -251,6 +251,7 @@ dns=default
 dhcp=dhclient
 ```
 
+Enable the NetworkManager service and start it:
 ```shell
 systemctl enable NetworkManager.service
 systemctl start NetworkManager.service

@@ -15,7 +15,21 @@ status() {
 }
 
 print() {
-  echo $(status)
+  if [[ $(status) == "enabled" ]]
+  then
+    fulltext="Enabled"
+  else
+    fulltext="Disabled"
+  fi
+
+  local ssid=$(iwgetid -r)
+  if [ ! -z "$ssid" ]
+  then
+    fulltext="$(iwgetid -r)"
+  fi
+
+
+  echo $fulltext
 }
 
 i3blocks() {
