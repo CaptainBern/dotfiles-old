@@ -5,8 +5,6 @@ tweaks for me.
 
 ## Installation
 
-(If you plan on installing i3 via the installation script, make sure you install xorg first if you haven't yet)
-
 To install:
 ```sh
 git clone https://github.com/CaptainBern/dotfiles.git ~/.dotfiles
