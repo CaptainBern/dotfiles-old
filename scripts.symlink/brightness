@@ -45,22 +45,22 @@ main() {
     until [[ -z $1 ]]
     do
       case $1 in
-        -h|--help )
-          usage
-          exit -1
+	-h|--help )
+	  usage
+	  exit -1
           ;;
 	up )
 	  shift
-	  up $1
-	  ;;
+          up $1
+          ;;
 	down )
 	  shift
-	  down $1
+          down $1
 	  ;;
-        print )
-          print
-          ;;
-        i3blocks )
+	print )
+	  print
+	  ;;
+	i3blocks )
           i3blocks
           ;;
         * )
