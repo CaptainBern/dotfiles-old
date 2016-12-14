@@ -154,8 +154,8 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id "$HOME/scripts/volume up 5 && 
 bindsym XF86AudioMute exec --no-startup-id "$HOME/scripts/volume toggle && pkill -RTMIN+1 i3blocks"
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessDown exec --no-startup-id "xbacklight -dec 10 && pkill -RTMIN+2 i3blocks"
-bindsym XF86MonBrightnessUp exec --no-startup-id "xbacklight -inc 10 && pkill -RTMIN+2 i3blocks"
+bindsym XF86MonBrightnessDown exec --no-startup-id "$HOME/scripts/brightness down 5 && pkill -RTMIN+2 i3blocks"
+bindsym XF86MonBrightnessUp exec --no-startup-id "$HOME/scripts/brightness up 5 && pkill -RTMIN+2 i3blocks"
 
 # screenshot
 bindsym --release Print exec --no-startup-id "maim -p 0 -c 0.96,0.5,0.09 $HOME/Pictures/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"

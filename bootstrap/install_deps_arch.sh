@@ -52,7 +52,6 @@ main() {
     xorg-server \
     xorg-xinit \
     xorg-xrandr \
-    xorg-xbacklight \
     expac \
     yajl \
     git \
@@ -86,6 +85,7 @@ main() {
     i3 \
     i3blocks \
     rofi \
+    light-git \
     pulseaudio \
     pulseaudio-alsa \
     alsa-utils \

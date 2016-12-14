@@ -2,25 +2,35 @@
 
 usage() {
 cat <<EOF
-usage: $(basename $0) [-h] [print] [i3blocks]
+usage: $(basename $0) [-h] [up %] [down %] [print] [i3blocks]
   general:
     -h, --help      print this message
+    up              increase the brightness by the given %
+    down            decrease the brightness by the given %
     print           print the brightness
     i3blocks        use the script with i3blocks (scroll-up increases the brightness, scroll-down decreases)
 EOF
 }
 
+up() {
+  light -A ${1:-"1"}
+}
+
+down() {
+  light -U ${1:-"1"}
+}
+
 print() {
-  printf "%.0f " $(xbacklight -get)
+  printf "%.0f " $(light -G)
 }
 
 i3blocks() {
   case "$BLOCK_BUTTON" in
     4)
-      xbacklight -time 0 -inc 1
+      up
       ;;
     5)
-      xbacklight -time 0 -dec 1
+      down
       ;;
   esac
 
@@ -39,6 +49,14 @@ main() {
           usage
           exit -1
           ;;
+	up )
+	  shift
+	  up $1
+	  ;;
+	down )
+	  shift
+	  down $1
+	  ;;
         print )
           print
           ;;
