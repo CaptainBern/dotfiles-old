@@ -32,25 +32,25 @@ main() {
     do
       case $1 in
         -h|--help )
-	    usage
-	    exit -1
-            ;;
-	up )
-	    shift
-            up $1
-            ;;
-	down )
-	    shift
-            down $1
-	    ;;
-	show )
-	    show
-	    ;;
+	        usage
+	        exit -1
+          ;;
+	      up )
+	        shift
+          up $1
+          ;;
+	      down )
+	        shift
+          down $1
+	        ;;
+	      show )
+	        show
+	        ;;
         * )
-            echo "Invalid option '$1'"
-            exit 1
-            ;;
-      	esac
+          echo "Invalid option '$1'"
+          exit 1
+          ;;
+        esac
       shift
     done
   fi

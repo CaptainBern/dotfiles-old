@@ -87,9 +87,9 @@ dotconfig() {
 
       if [ -f "/sys/class/power_supply/$REPLY/status" ]
       then
-	  ok "Setting \$POLYBAR_BATTERY to $REPLY"
-	  echo -e "# Polybar Battery\nexport POLYBAR_BATTERY=$REPLY\n" >> $HOME/.dotconfig
-	  break
+        ok "Setting \$POLYBAR_BATTERY to $REPLY"
+	      echo -e "# Polybar Battery\nexport POLYBAR_BATTERY=$REPLY\n" >> $HOME/.dotconfig
+	      break
       else
          warn "$REPLY is not a valid battery!"
       fi
@@ -106,8 +106,8 @@ dotconfig() {
       if [ -f "/sys/class/power_supply/$REPLY/online" ]
       then
         ok "Setting \$POLYBAR_ADAPTER to $REPLY"
-	echo -e "# Polybar Adapter\nexport POLYBAR_ADAPTER=$REPLY\n" >> $HOME/.dotconfig
-	break
+	      echo -e "# Polybar Adapter\nexport POLYBAR_ADAPTER=$REPLY\n" >> $HOME/.dotconfig
+	      break
       else
         warn "$REPLY is not a valid adapter!"
       fi
@@ -126,7 +126,7 @@ dotconfig() {
       if [ -n "$REPLY" ]
       then
         ok "Setting \$POLYBAR_WIFI to $REPLY"
-	echo -e "# Polybar Wifi\nexport POLYBAR_WIFI=$REPLY\n" >> $HOME/.dotconfig
+	      echo -e "# Polybar Wifi\nexport POLYBAR_WIFI=$REPLY\n" >> $HOME/.dotconfig
         break
       fi
     done
@@ -144,7 +144,7 @@ dotconfig() {
       if [ -n "$REPLY" ]
       then
         ok "Setting \$POLYBAR_ETHERNET to $REPLY"
-	echo -e "# Polybar Ethernet\nexport POLYBAR_ETHERNET=$REPLY\n" >> $HOME/.dotconfig
+	      echo -e "# Polybar Ethernet\nexport POLYBAR_ETHERNET=$REPLY\n" >> $HOME/.dotconfig
         break
       fi
     done
