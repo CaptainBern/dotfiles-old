@@ -149,13 +149,13 @@ workspace_auto_back_and_forth yes
 focus_on_window_activation urgent
 
 # Sound controls
-bindsym XF86AudioLowerVolume exec --no-startup-id "$HOME/scripts/volume down 5 && pkill -RTMIN+1 i3blocks"
-bindsym XF86AudioRaiseVolume exec --no-startup-id "$HOME/scripts/volume up 5 && pkill -RTMIN+1 i3blocks"
-bindsym XF86AudioMute exec --no-startup-id "$HOME/scripts/volume toggle && pkill -RTMIN+1 i3blocks"
+bindsym XF86AudioLowerVolume exec --no-startup-id "$HOME/scripts/volume down 1"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "$HOME/scripts/volume up 1"
+bindsym XF86AudioMute exec --no-startup-id "$HOME/scripts/volume toggle"
 
 # Sreen brightness controls
-bindsym XF86MonBrightnessDown exec --no-startup-id "$HOME/scripts/brightness down 5 && pkill -RTMIN+2 i3blocks"
-bindsym XF86MonBrightnessUp exec --no-startup-id "$HOME/scripts/brightness up 5 && pkill -RTMIN+2 i3blocks"
+bindsym XF86MonBrightnessDown exec --no-startup-id "$HOME/scripts/brightness down 1"
+bindsym XF86MonBrightnessUp exec --no-startup-id "$HOME/scripts/brightness up 1"
 
 # screenshot
 bindsym --release Print exec --no-startup-id "maim -p 0 -c 0.96,0.5,0.09 $HOME/Pictures/screenshot-$(date +%Y-%m-%d_%H-%M-%S).png"
@@ -232,25 +232,25 @@ client.background       $bg0
 #                 i3-bar                    #
 #############################################
 
-bar {
-        position bottom
-        font pango:Open Sans, FontAwesome 11
-        status_command i3blocks
-        tray_padding 0
-
-        colors {
-          statusline  $fg1
-          background  $bg0
-          separator   $bg0
-
-          # name              border  bg    text
-          focused_workspace   $fg1    $bg0  $fg1
-          active_workspace    $bg0    $bg0  $fg4
-          inactive_workspace  $bg0    $bg0  $fg4
-          urgent_workspace    $red    $red  $fg1
-          binding_mode        $red    $red  $fg1
-        }
-}
+# bar {
+#         position bottom
+#         font pango:Open Sans, FontAwesome 11
+#         status_command i3blocks
+#         tray_padding 0
+#
+#         colors {
+#           statusline  $fg1
+#           background  $bg0
+#           separator   $bg0
+#
+#           # name              border  bg    text
+#           focused_workspace   $fg1    $bg0  $fg1
+#           active_workspace    $bg0    $bg0  $fg4
+#           inactive_workspace  $bg0    $bg0  $fg4
+#           urgent_workspace    $red    $red  $fg1
+#           binding_mode        $red    $red  $fg1
+#         }
+# }
 
 #############################################
 #        Windows & Startup programs         #
@@ -261,12 +261,15 @@ for_window [instance="__weechat__"] border pixel 3
 for_window [class="(?i)firefox" instance="(?i)navigator"] border pixel 3
 for_window [class="(?i)pavucontrol"] floating enable
 
-for_window [window_role="pop-up"] floating enable
-for_window [window_role="bubble"] floating enable
-for_window [window_role="task_dialog"] floating enable
-for_window [window_role="Preferences"] floating enable
-for_window [window_type="dialog"] floating enable
-for_window [window_type="menu"] floating enable
+for_window [window_role="(?i)wizard"] floating enable
+for_window [window_role="(?i)pop-up"] floating enable
+for_window [window_role="(?i)bubble"] floating enable
+for_window [window_role="(?i)task_dialog"] floating enable
+for_window [window_role="(?i)preferences"] floating enable
+for_window [window_type="(?i)dialog"] floating enable
+for_window [window_type="(?i)menu"] floating enable
 
+exec_always --no-startup-id $HOME/.config/polybar/launch
 exec_always --no-startup-id wallpaper
 exec --no-Startup-id $terminal --name "__weechat__" -e weechat
+

@@ -2,13 +2,12 @@
 
 usage() {
 cat <<EOF
-usage: $(basename $0) [-h] [up %] [down %] [print] [i3blocks]
+usage: $(basename $0) [-h] [up %] [down %] [show]
   general:
     -h, --help      print this message
     up              increase the brightness by the given %
     down            decrease the brightness by the given %
-    print           print the brightness
-    i3blocks        use the script with i3blocks (scroll-up increases the brightness, scroll-down decreases)
+    show            print the brightness
 EOF
 }
 
@@ -20,54 +19,38 @@ down() {
   light -U ${1:-"1"}
 }
 
-print() {
+show() {
   printf "%.0f " $(light -G)
-}
-
-i3blocks() {
-  case "$BLOCK_BUTTON" in
-    4)
-      up
-      ;;
-    5)
-      down
-      ;;
-  esac
-
-  print
 }
 
 main() {
   if [[ -z $1 ]]
   then
-    print
+    usage
   else
     until [[ -z $1 ]]
     do
       case $1 in
         -h|--help )
-	        usage
-	        exit -1
-          ;;
-	      up )
-	        shift
-          up $1
-          ;;
-	      down )
-	        shift
-          down $1
-	        ;;
-	      print )
-	        print
-	        ;;
-    	  i3blocks )
-          i3blocks
-          ;;
+	    usage
+	    exit -1
+            ;;
+	up )
+	    shift
+            up $1
+            ;;
+	down )
+	    shift
+            down $1
+	    ;;
+	show )
+	    show
+	    ;;
         * )
-          echo "Invalid option '$1'"
-          exit 1
-          ;;
-      esac
+            echo "Invalid option '$1'"
+            exit 1
+            ;;
+      	esac
       shift
     done
   fi

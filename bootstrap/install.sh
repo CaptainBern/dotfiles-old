@@ -77,6 +77,78 @@ dotconfig() {
       fi
     done
   fi
+
+  if [[ -z "$POLYBAR_BATTERY" ]]
+  then
+    while true
+    do
+      echo -n "Please enter your battery: "
+      read REPLY </dev/tty
+
+      if [ -f "/sys/class/power_supply/$REPLY/status" ]
+      then
+	  ok "Setting \$POLYBAR_BATTERY to $REPLY"
+	  echo -e "# Polybar Battery\nexport POLYBAR_BATTERY=$REPLY\n" >> $HOME/.dotconfig
+	  break
+      else
+         warn "$REPLY is not a valid battery!"
+      fi
+    done
+  fi
+
+  if [[ -z "$POLYBAR_ADAPTER" ]]
+  then
+    while true
+    do
+      echo -n "Please enter your adapter: "
+      read REPLY </dev/tty
+
+      if [ -f "/sys/class/power_supply/$REPLY/online" ]
+      then
+        ok "Setting \$POLYBAR_ADAPTER to $REPLY"
+	echo -e "# Polybar Adapter\nexport POLYBAR_ADAPTER=$REPLY\n" >> $HOME/.dotconfig
+	break
+      else
+        warn "$REPLY is not a valid adapter!"
+      fi
+    done
+  fi
+
+  if [[ -z "$POLYBAR_WIFI" ]]
+  then
+    while true
+    do
+      echo "Network devices:"
+      echo $(ls /sys/class/net) | sed 's/ /, /g'
+      echo -n "Please enter your wifi card: "
+      read REPLY </dev/tty
+
+      if [ -n "$REPLY" ]
+      then
+        ok "Setting \$POLYBAR_WIFI to $REPLY"
+	echo -e "# Polybar Wifi\nexport POLYBAR_WIFI=$REPLY\n" >> $HOME/.dotconfig
+        break
+      fi
+    done
+  fi
+
+  if [[ -z "$POLYBAR_ETHERNET" ]]
+  then
+    while true
+    do
+      echo "Network devices:"
+      echo $(ls /sys/class/net) | sed 's/ /, /g'
+      echo -n "Please enter your ethernet card: "
+      read REPLY </dev/tty
+
+      if [ -n "$REPLY" ]
+      then
+        ok "Setting \$POLYBAR_ETHERNET to $REPLY"
+	echo -e "# Polybar Ethernet\nexport POLYBAR_ETHERNET=$REPLY\n" >> $HOME/.dotconfig
+        break
+      fi
+    done
+  fi
 }
 
 main() {

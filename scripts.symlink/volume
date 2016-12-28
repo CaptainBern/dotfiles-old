@@ -4,16 +4,12 @@
 # Julien Bonjean <julien@bonjean.info>
 # Alexander Keller <github@nycroth.com>
 
-AUDIO_HIGH_SYMBOL=''
-AUDIO_LOW_SYMBOL=''
-AUDIO_MUTED_SYMBOL=''
-
 MIXER=
 SCONTROL=
 
 usage() {
 cat <<EOF
-usage: $(basename $0) [-h] [-m mixer] [-c control] [toggle] [up %] [down %] [print] [i3blocks]
+usage: $(basename $0) [-h] [-m mixer] [-c control] [toggle] [up %] [down %] [show]
   general:
     -h, --help      print this message
     -m, --mixer     sets the mixer to use (default='default')
@@ -21,9 +17,7 @@ usage: $(basename $0) [-h] [-m mixer] [-c control] [toggle] [up %] [down %] [pri
     toggle          toggles between mute and unmute
     up              increase the volume by the given %
     down            decrease the volume by the given %
-    print           print the volume in a fancy format
-    i3blocks        use the script with i3blocks (left-click opens pavu-control, right-click will toggle the volume,
-                    scroll up will increase it, scroll down will decrease it)
+    show           print the volume
 EOF
 }
 
@@ -78,55 +72,23 @@ down() {
   amixer -q -D $(get_mixer) sset $(get_scontrol) $(get_capability)  ${1:-"5"}%- unmute
 }
 
-icon() {
+show() {
   local volume=$(get_volume)
-  if [ "$volume" -le 25 ] || is_muted
-  then
-    echo $AUDIO_MUTED_SYMBOL
-  elif [ "$volume" -le 50 ]
-  then
-    echo $AUDIO_LOW_SYMBOL
-  else
-    echo $AUDIO_HIGH_SYMBOL
-  fi
-}
-
-print() {
-  local volume=$(get_volume)
-  local output=$(icon)
+  
   if [ "$volume" -eq 0 ] || is_muted
   then
-    output="$output muted"
+    output="muted"
   else
-    output="$output $volume%"
+    output="$volume%"
   fi
 
   echo $output
 }
 
-i3blocks() {
-  case "$BLOCK_BUTTON" in
-    1)
-      pavucontrol -t 3
-      ;;
-    3)
-      toggle
-      ;;
-    4)
-      up 5
-      ;;
-    5)
-      down 5
-      ;;
-  esac
-
-  print
-}
-
 main() {
   if [[ -z $1 ]]
   then
-    print
+    usage
   else
     until [[ -z $1 ]]
     do
@@ -154,11 +116,8 @@ main() {
           shift
           down $1
           ;;
-        print )
-          print
-          ;;
-        i3blocks )
-          i3blocks
+        show )
+          show
           ;;
         * )
           echo "Invalid option '$1'"
