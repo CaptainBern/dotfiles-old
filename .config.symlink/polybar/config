@@ -241,8 +241,12 @@ label = %title:0:30:...%
 type = internal/volume
 
 format-volume = <ramp-volume> <label-volume>
-format-volume-underline = ${colors.blue}
+format-volume-underline = ${colors.green}
 format-volume-padding = 2
+
+format-muted = <label-muted>
+format-muted-underline = ${colors.red}
+format-muted-padding = 2
 
 label-muted = " muted"
 
@@ -306,17 +310,17 @@ type = internal/network
 interface = ${env:POLYBAR_ETHERNET:eth0}
 
 format-connected = <label-connected>
-format-connected-prefix = "  "
+format-connected-prefix = "  "
 format-connected-underline = ${colors.dark_green}
 format-connected-padding = 2
 
 format-disconnected = <label-disconnected>
-format-disconnected-prefix = "  "
+format-disconnected-prefix = "  "
 format-disconnected-underline = ${colors.dark_red}
 format-disconnected-padding = 2
 
 format-packetloss = <label-connected>
-format-packetloss-prefix = "  "
+format-packetloss-prefix = "  "
 format-packetloss-underline = ${colors.dark_yellow}
 format-packetloss-padding = 2
 
