@@ -161,7 +161,7 @@ main() {
     exit 1
   fi
 
-	source $DOTFILES_ROOT/bootstrap/utils.sh
+  source $DOTFILES_ROOT/bootstrap/utils.sh
 
   install_deps
   install_dotfiles
