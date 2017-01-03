@@ -5,5 +5,5 @@ then
   echo "\$WALLPAPER not set!"
   exit 1
 else
-  feh --bg-fill $WALLPAPER
+  feh --no-fehbg --bg-fill $WALLPAPER
 fi
